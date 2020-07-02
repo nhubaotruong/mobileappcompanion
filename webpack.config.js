@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 require('@babel/register');
 require('@babel/polyfill');
@@ -17,7 +17,7 @@ module.exports = () => {
     },
     optimization: {
       minimizer: [
-        new UglifyJsPlugin(),
+        // new UglifyJsPlugin(),
         new OptimizeCssAssetsPlugin({
           cssProcessorOptions: {
             discardComments: {
