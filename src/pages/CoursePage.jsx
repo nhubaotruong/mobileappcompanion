@@ -67,7 +67,7 @@ const CoursePage = props => {
         res.timeStart = dateRange[0].startDate ? moment(dateRange[0].startDate).toISOString() : moment().toISOString();
         res.timeEnd = dateRange[0].endDate ? moment(dateRange[0].endDate).toISOString() : moment().toISOString();
         if (currentItem) {
-            res.isActive = true;
+            res.isActive = values.isActive;
             props.editCourse(res, currentItem._id, props.system?.token, closeModal);
         } else {
             props.createCourse(res, props.system?.token, closeModal);
@@ -182,7 +182,7 @@ const CoursePage = props => {
                                     <label className='control-label'>Kích hoạt: &nbsp;</label>
                                     <div className='toggle'>
                                         <label>
-                                            <input type='checkbox' name='isActive' defaultChecked={currentItem?.isActive || true}
+                                            <input type='checkbox' name='isActive' defaultChecked={currentItem?.isActive === true ? true : false}
                                                 ref={register}
                                             />
                                             <span className='button-indecator' />
