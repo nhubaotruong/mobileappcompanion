@@ -19,7 +19,7 @@ module.exports = () => {
     optimization: {
       minimize: true,
       minimizer: [
-        new UglifyJsPlugin(),
+        // new UglifyJsPlugin(),
         new TerserPlugin({
           terserOptions: {
             parse: {
