@@ -1,0 +1,11 @@
+.button {
+    border: 1px solid white;
+    background: white;
+    color: #168644 !important;
+    &:hover {
+        background-color: #168644;
+        color: white !important;
+        border-color: #168644;
+    }
+    transition: 0.3s;
+}

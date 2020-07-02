@@ -1,0 +1,94 @@
+@import "bootstrap/scss/bootstrap.scss";
+
+$fa-font-path: "~font-awesome/fonts/";
+@import "font-awesome/scss/font-awesome.scss";
+
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+a {
+	text-decoration: none !important;
+	&:hover {
+		text-decoration: none !important;
+	}
+}
+
+.row {
+	margin: 0 !important;
+}
+
+.tile {
+	background-color: white;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.toggle {
+	&.lg {
+		input[type="checkbox"] + .button-indecator:before {
+			font-size: 30px;
+		}
+	}
+
+	input[type="checkbox"] {
+		display: none;
+
+		+ .button-indecator {
+			cursor: pointer;
+			display: block;
+			user-select: none;
+
+			&:before {
+				content: "";
+				font-family: "FontAwesome";
+				speak: none;
+				font-style: normal;
+				font-weight: normal;
+				font-variant: normal;
+				text-transform: none;
+				line-height: 1;
+				font-size: 25px;
+				-webkit-font-smoothing: antialiased;
+				display: inline-block;
+				margin-right: 5px;
+				vertical-align: -2px;
+			}
+		}
+
+		&:checked + .button-indecator:before {
+			content: "";
+			color: #007bff;
+			animation: toggleBtn 0.3s ease-in-out;
+		}
+
+		&:disabled + .button-indecator {
+			cursor: not-allowed !important;
+
+			&:before {
+				color: #ccc;
+			}
+		}
+	}
+}
+
+@keyframes toggleBtn {
+	0% {
+		opacity: 0;
+		transform: translateX(-1px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
