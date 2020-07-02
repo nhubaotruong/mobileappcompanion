@@ -63,7 +63,7 @@ export const createCourse = (data, token, done) => {
             console.log(res.data.message);
             dispatch(getAllCourses(token));
         } else {
-            console.log(res);
+            console.log(res.data.message);
         }
         done();
     }
@@ -80,7 +80,24 @@ export const editCourse = (data, id, token, done) => {
             console.log(res.data.message);
             dispatch(getAllCourses(token));
         } else {
-            console.log(res);
+            console.log(res.data.message);
+        }
+        done();
+    }
+}
+
+export const toggleCourse = (id, token, done) => {
+    return async dispatch => {
+        let res = await axios.delete(host + '/course/' + id, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (res.data.statusCode === 201) {
+            console.log(res.data.message);
+            dispatch(getAllCourses(token));
+        } else {
+            console.log(res.data.message);
         }
         done();
     }

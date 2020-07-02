@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../redux/systemReducer';
-import { getAllCourses, createCourse, editCourse } from '../redux/courseReducer';
+import { getAllCourses, createCourse, editCourse, toggleCourse } from '../redux/courseReducer';
 import moment from 'moment';
 import Modal from 'react-modal';
 import { DateRange } from 'react-date-range';
@@ -26,9 +26,7 @@ const CoursePage = props => {
             key: 'selection'
         }
     ]);
-    const codeRef = React.useRef();
-    const nameRef = React.useRef();
-    const isActiveRef = React.useRef();
+
     const showModal = (e, item) => {
         e.preventDefault();
         setCurrentItem(item);
@@ -76,9 +74,9 @@ const CoursePage = props => {
         }
     }
 
-    const deleteCourse = (e, item) => {
+    const toggleCourse = (e, item) => {
         e.preventDefault();
-        console.log('haha');
+        props.toggleCourse(item._id, props.system?.token, closeModal);
     }
 
     const { handleSubmit, register, errors } = useForm();
@@ -98,24 +96,27 @@ const CoursePage = props => {
                 </thead>
                 <tbody>
                     {props.course.items.map((item, index) => {
-                        if (item.isActive) {
-                            return (
-                                <tr key={index}>
-                                    <th className='text-center align-middle' scope='row'>{index + 1}</th>
-                                    <td className='align-middle'>{item.code || ''}</td>
-                                    <td className='align-middle'>{item.name || ''}</td>
-                                    <td className='align-middle'>{moment(item.timeStart).format('hh:mm A DD/MM/YYYY')} - {moment(item.timeEnd).format('hh:mm A DD/MM/YYYY')}</td>
-                                    <td className='text-center'>
-                                        <a href='#' className="btn btn-primary" onClick={e => showModal(e, item)}>
-                                            <i className="fa fa-pencil-square-o" aria-hidden="true" />
-                                        </a>
-                                        <a href='#' className="btn btn-danger" onClick={e => deleteCourse(e, item)}>
+                        return (
+                            <tr key={index}>
+                                <th className='text-center align-middle' scope='row'>{index + 1}</th>
+                                <td className='align-middle'>{item.code || ''}</td>
+                                <td className='align-middle'>{item.name || ''}</td>
+                                <td className='align-middle'>{moment(item.timeStart).format('hh:mm A DD/MM/YYYY')} - {moment(item.timeEnd).format('hh:mm A DD/MM/YYYY')}</td>
+                                <td className='text-center'>
+                                    <a href='#' className="btn btn-primary" onClick={e => showModal(e, item)}>
+                                        <i className="fa fa-pencil-square-o" aria-hidden="true" />
+                                    </a>
+                                    {item.isActive ?
+                                        <a href='#' className="btn btn-danger" onClick={e => toggleCourse(e, item)}>
                                             <i className="fa fa-trash-o" aria-hidden="true" />
-                                        </a>
-                                    </td>
-                                </tr>
-                            )
-                        }
+                                        </a> :
+                                        <a href='#' className="btn btn-info" onClick={e => toggleCourse(e, item)}>
+                                            <i className="fa fa-check-square-o" aria-hidden="true" />
+                                        </a>}
+                                </td>
+                            </tr>
+                        )
+
                     })}
                 </tbody>
             </table>
@@ -177,7 +178,7 @@ const CoursePage = props => {
                                     />
                                     <p style={{ color: 'red' }}>{errors.username && errors.username.message}</p>
                                 </div>
-                                <div className='d-flex mt-3 col-12'>
+                                <div className='d-flex col-12'>
                                     <label className='control-label'>Kích hoạt: &nbsp;</label>
                                     <div className='toggle'>
                                         <label>
@@ -212,6 +213,6 @@ const CoursePage = props => {
 }
 
 const mapStatesToProps = state => ({ system: state.system, course: state.course });
-const mapFunctionsToProps = { logout, getAllCourses, createCourse, editCourse };
+const mapFunctionsToProps = { logout, getAllCourses, createCourse, editCourse, toggleCourse };
 
 export default connect(mapStatesToProps, mapFunctionsToProps)(CoursePage);
